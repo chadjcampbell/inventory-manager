@@ -32,7 +32,7 @@ const userSchema = mongoose.Schema(
     bio: {
       type: String,
       default: "Your bio here...",
-      maxLength: [250, "Password must be less than 250 characters"],
+      maxLength: [250, "Bio must be less than 250 characters"],
     },
   },
   { timestamps: true }
