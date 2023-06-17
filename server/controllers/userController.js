@@ -196,6 +196,38 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 });
 
+const changePassword = [
+  body("password")
+    .trim()
+    .isLength({ min: 6, max: 24 })
+    .withMessage("Password must be between 6 and 24 characters."),
+  asyncHandler(async (req, res) => {
+    // extract the validation errors from a request
+    const errors = validationResult(req);
+    // there are errors
+    if (!errors.isEmpty()) {
+      res.status(400);
+      throw new Error(errors.array()[0].msg);
+    }
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      res.status(400);
+      throw new Error("User not found");
+    }
+    const { oldPassword, password } = req.body;
+    // check old password
+    const passwordIsCorrect = await bcrypt.compare(oldPassword, user.password);
+    if (user && passwordIsCorrect) {
+      user.password = password;
+      await user.save();
+      res.status(200).send("Password changed successfuly");
+    } else {
+      res.status(400);
+      throw new Error("Old password is incorrect");
+    }
+  }),
+];
+
 module.exports = {
   registerUser,
   loginUser,
@@ -203,4 +235,5 @@ module.exports = {
   getUser,
   loginStatus,
   updateUser,
+  changePassword,
 };
