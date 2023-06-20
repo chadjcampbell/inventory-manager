@@ -2,6 +2,7 @@ const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 const Product = require("../models/productModel");
 const { filesize } = require("filesize");
+const cloudinary = require("cloudinary").v2;
 
 const createProduct = [
   // validate request
@@ -48,9 +49,21 @@ const createProduct = [
     // handle image upload
     let fileData = {};
     if (req.file) {
+      // save to cloudinary
+      let uploadedFile;
+      try {
+        uploadedFile = await cloudinary.uploader.upload(req.file.path, {
+          folder: "inStock",
+          resource_type: "image",
+        });
+      } catch (error) {
+        res.status(500);
+        throw new Error("Image upload failed");
+      }
+
       fileData = {
         fileName: req.file.originalname,
-        filePath: req.file.path,
+        filePath: uploadedFile.secure_url,
         fileType: req.file.mimetype,
         fileSize: filesize(req.file.size),
       };
