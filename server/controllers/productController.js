@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 const Product = require("../models/productModel");
+const { filesize } = require("filesize");
 
 const createProduct = [
   // validate request
@@ -44,7 +45,16 @@ const createProduct = [
       throw new Error(errors.array()[0].msg);
     }
 
-    // manage image upload
+    // handle image upload
+    let fileData = {};
+    if (req.file) {
+      fileData = {
+        fileName: req.file.originalname,
+        filePath: req.file.path,
+        fileType: req.file.mimetype,
+        fileSize: filesize(req.file.size),
+      };
+    }
 
     // creat product
     const product = await Product.create({
@@ -55,6 +65,7 @@ const createProduct = [
       quantity,
       price,
       description,
+      image: fileData,
     });
     res.status(201).json(product);
   }),
