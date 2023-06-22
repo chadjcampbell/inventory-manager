@@ -84,6 +84,12 @@ const createProduct = [
   }),
 ];
 
+// get all products
+const getProducts = asyncHandler(async (req, res) => {
+  res.send("Get products");
+});
+
 module.exports = {
   createProduct,
+  getProducts,
 };
