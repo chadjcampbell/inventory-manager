@@ -1,7 +1,7 @@
 const multer = require("multer");
 
 // define file storage ** SWITCHED TO CLOUDINARY **
-/* const storage = multer.diskStorage({
+const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads");
   },
@@ -11,7 +11,7 @@ const multer = require("multer");
       new Date().toISOString().replace(/:/g, "-") + "-" + file.originalname
     );
   },
-}); */
+});
 
 // restrict file format
 function fileFilter(req, file, cb) {
@@ -28,6 +28,6 @@ function fileFilter(req, file, cb) {
 }
 
 // const upload = multer({ storage, fileFilter });
-const upload = multer({ fileFilter });
+const upload = multer({ storage, fileFilter });
 
 module.exports = { upload };

@@ -58,7 +58,7 @@ const createProduct = [
         });
       } catch (error) {
         res.status(500);
-        throw new Error("Image upload failed");
+        throw new Error(error.message);
       }
 
       fileData = {
@@ -69,7 +69,7 @@ const createProduct = [
       };
     }
 
-    // creat product
+    // create product
     const product = await Product.create({
       user: req.user.id,
       name,
@@ -109,8 +109,36 @@ const getProduct = asyncHandler(async (req, res) => {
   }
 });
 
+// delete product
+const deleteProduct = asyncHandler(async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    if (!product) {
+      res.status(404);
+      throw new Error("Product not found");
+    }
+    if (product.user.toString() !== req.user.id) {
+      res.status(401);
+      throw new Error("User not authorized");
+    }
+
+    // remove image from cloudinary
+    const imagePath = product.image.filePath;
+    const imageId = cloudinary.url(imagePath).split("/").pop();
+    await cloudinary.uploader.destroy(imageId);
+
+    // then remove from mongodb
+    await Product.deleteOne({ _id: req.params.id });
+    res.status(200).json({ message: "Product deleted" });
+  } catch (error) {
+    res.status(404);
+    throw new Error("Product not found");
+  }
+});
+
 module.exports = {
   createProduct,
   getProducts,
   getProduct,
+  deleteProduct,
 };
