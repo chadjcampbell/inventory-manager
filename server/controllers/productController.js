@@ -62,6 +62,7 @@ const createProduct = [
       }
 
       fileData = {
+        public_id: uploadedFile.public_id,
         fileName: req.file.originalname,
         filePath: uploadedFile.secure_url,
         fileType: req.file.mimetype,
@@ -123,12 +124,11 @@ const deleteProduct = asyncHandler(async (req, res) => {
     }
 
     // remove image from cloudinary
-    const imagePath = product.image.filePath;
-    const imageId = cloudinary.url(imagePath).split("/").pop();
-    await cloudinary.uploader.destroy(imageId);
+    const imgId = product.image.public_id;
+    await cloudinary.uploader.destroy(imgId);
 
     // then remove from mongodb
-    await Product.deleteOne({ _id: req.params.id });
+    await product.deleteOne();
     res.status(200).json({ message: "Product deleted" });
   } catch (error) {
     res.status(404);
