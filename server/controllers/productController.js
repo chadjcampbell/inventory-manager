@@ -136,9 +136,16 @@ const deleteProduct = asyncHandler(async (req, res) => {
   }
 });
 
+// update product
+
+const updateProduct = asyncHandler(async (req, res) => {
+  res.send("update product");
+});
+
 module.exports = {
   createProduct,
   getProducts,
   getProduct,
   deleteProduct,
+  updateProduct,
 };
