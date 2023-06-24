@@ -9,7 +9,7 @@ import { Inventory2Outlined } from "@mui/icons-material";
 export default function ButtonAppBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar sx={{ backgroundColor: "primary.main" }} position="static">
         <Toolbar>
           <IconButton
             size="large"

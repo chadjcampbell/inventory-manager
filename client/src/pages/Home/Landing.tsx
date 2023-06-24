@@ -15,7 +15,6 @@ const Landing = () => {
     >
       <Stack
         sx={{ borderRadius: 5, overflow: "hidden" }}
-        bgcolor="primary"
         px={5}
         gap={3}
         justifyContent="space-evenly"
