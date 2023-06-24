@@ -1,8 +1,13 @@
+import { Box } from "@mui/material";
+import ButtonAppBar from "./ButtonAppBar";
+import Landing from "./Landing";
+
 const Home = () => {
   return (
-    <div>
-      <h1>Home Page</h1>
-    </div>
+    <Box>
+      <ButtonAppBar />
+      <Landing />
+    </Box>
   );
 };
 
