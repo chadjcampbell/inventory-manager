@@ -8,6 +8,10 @@ const Landing = () => {
       direction="row"
       justifyContent="space-evenly"
       alignItems="center"
+      sx={{
+        background:
+          "linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(220,196,246,1) 100%)",
+      }}
     >
       <Stack
         sx={{ borderRadius: 5, overflow: "hidden" }}
@@ -17,7 +21,7 @@ const Landing = () => {
         justifyContent="space-evenly"
         alignItems="center"
       >
-        <Typography variant="h4" component="h1">
+        <Typography color="primary" variant="h4" component="h1">
           inStock Inventory Manager
         </Typography>
         <Typography variant="h6" component="h2">
