@@ -26,7 +26,9 @@ const Landing = () => {
         <Typography variant="h6" component="h2">
           Inventory management made easy!
         </Typography>
-        <Button variant="outlined">Get Started</Button>
+        <Button href="/dashboard" variant="outlined">
+          Get Started
+        </Button>
       </Stack>
       <Box mx={3} sx={{ borderRadius: 5, overflow: "hidden" }}>
         <img src="/landing.webp" alt="Inventory Stock Photo" loading="lazy" />

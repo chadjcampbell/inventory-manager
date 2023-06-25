@@ -23,10 +23,15 @@ export default function ButtonAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             inStock
           </Typography>
-          <Button variant="outlined" color="inherit">
+          <Button href="/login" variant="outlined" color="inherit">
             Login
           </Button>
-          <Button color="inherit">Sign Up</Button>
+          <Button href="/register" color="inherit">
+            Sign Up
+          </Button>
+          <Button href="/dashboard" color="inherit" variant="outlined">
+            Dashboard
+          </Button>
         </Toolbar>
       </AppBar>
     </Box>
