@@ -7,14 +7,15 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
     // TODO: Submit the login form
   };
 
@@ -51,6 +52,8 @@ const Login = () => {
           }}
         >
           <IconButton
+            component={Link}
+            to="/"
             size="large"
             edge="start"
             color="primary"
@@ -69,26 +72,39 @@ const Login = () => {
           </Typography>
         </Box>
         <h1>Welcome back</h1>
-        <TextField
-          sx={{ margin: "10px" }}
-          label="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <TextField
-          sx={{ margin: "10px" }}
-          label="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Button
-          sx={{ margin: "30px" }}
-          variant="contained"
-          color="primary"
-          onClick={handleSubmit}
+        <form
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexDirection: "column",
+          }}
+          onSubmit={(e) => handleSubmit(e)}
         >
-          Login
-        </Button>
+          <TextField
+            sx={{ margin: "10px" }}
+            label="Email"
+            value={email}
+            name="email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <TextField
+            sx={{ margin: "10px" }}
+            label="Password"
+            value={password}
+            name="password"
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button
+            type="submit"
+            sx={{ margin: "30px" }}
+            variant="contained"
+            color="primary"
+          >
+            Login
+          </Button>
+        </form>
         <Typography
           to="/forgot"
           color="primary"
