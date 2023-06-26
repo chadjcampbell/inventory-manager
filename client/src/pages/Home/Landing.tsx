@@ -1,4 +1,5 @@
 import { Box, Button, Grid, Stack, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const Landing = () => {
   return (
@@ -26,7 +27,7 @@ const Landing = () => {
         <Typography variant="h6" component="h2">
           Inventory management made easy!
         </Typography>
-        <Button href="/dashboard" variant="outlined">
+        <Button component={Link} to="/dashboard" variant="outlined">
           Get Started
         </Button>
       </Stack>

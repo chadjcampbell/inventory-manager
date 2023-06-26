@@ -5,6 +5,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import { Inventory2Outlined } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
 export default function ButtonAppBar() {
   return (
@@ -23,13 +24,23 @@ export default function ButtonAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             inStock
           </Typography>
-          <Button href="/login" variant="outlined" color="inherit">
+          <Button
+            component={Link}
+            to="/login"
+            variant="outlined"
+            color="inherit"
+          >
             Login
           </Button>
-          <Button href="/register" color="inherit">
+          <Button component={Link} to="/register" color="inherit">
             Sign Up
           </Button>
-          <Button href="/dashboard" color="inherit" variant="outlined">
+          <Button
+            component={Link}
+            to="/dashboard"
+            color="inherit"
+            variant="outlined"
+          >
             Dashboard
           </Button>
         </Toolbar>
