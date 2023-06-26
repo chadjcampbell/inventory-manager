@@ -15,7 +15,7 @@ const Forgot = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    // TODO: Submit the login form
+    // TODO: Submit the form
   };
 
   return (
@@ -70,7 +70,7 @@ const Forgot = () => {
             inStock
           </Typography>
         </Box>
-        <h1>Reset password</h1>
+        <h1>Forgot password</h1>
         <form
           style={{
             display: "flex",

@@ -18,7 +18,7 @@ const Register = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    // TODO: Submit the login form
+    // TODO: Submit the form
   };
 
   return (
