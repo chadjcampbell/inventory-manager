@@ -9,13 +9,24 @@ import {
 } from "@mui/material";
 import { FormEvent, useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { validEmail } from "./Register";
+import { forgotPassword } from "../../services/authService";
 
 const Forgot = () => {
   const [email, setEmail] = useState("");
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    // TODO: Submit the form
+    if (!email) {
+      return toast.error("Please enter an email");
+    }
+    if (!validEmail(email)) {
+      return toast.error("Email must be valid");
+    }
+    const userData = { email };
+    await forgotPassword(userData);
+    setEmail("");
   };
 
   return (
