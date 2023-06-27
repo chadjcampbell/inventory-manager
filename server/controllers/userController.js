@@ -15,11 +15,9 @@ const registerUser = [
   // validate and sanitize fields
   body("name")
     .trim()
-    .isLength({ min: 1 })
+    .isLength({ min: 3 })
     .escape()
-    .withMessage("Name must be specified.")
-    .isAlphanumeric()
-    .withMessage("Name has non-alphanumeric characters."),
+    .withMessage("Name must be specified."),
   body("password")
     .trim()
     .isLength({ min: 6, max: 24 })

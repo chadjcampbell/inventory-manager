@@ -8,18 +8,55 @@ import {
   Typography,
 } from "@mui/material";
 import { FormEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { registerUser } from "../../services/authService";
+import { useDispatch } from "react-redux";
+import { SET_LOGIN, SET_NAME } from "../../redux/features/auth/authSlice";
+import Loading from "../../components/Loading";
+
+export const validEmail = (email: string): boolean => {
+  const regex = new RegExp(
+    "([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|\"([]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|[[\t -Z^-~]*])"
+  );
+  return regex.test(email);
+};
 
 const Register = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    // TODO: Submit the form
+    if (!name || !email || !password || !confirmPassword) {
+      return toast.error("All fields are required");
+    }
+    if (password.length < 6) {
+      return toast.error("Password must be at least 6 characters");
+    }
+    if (password !== confirmPassword) {
+      return toast.error("Passwords must match");
+    }
+    if (!validEmail(email)) {
+      return toast.error("Email must be valid");
+    }
+    const userData = { name, email, password };
+    setIsLoading(true);
+    try {
+      const data = await registerUser(userData);
+      dispatch(SET_LOGIN(true));
+      dispatch(SET_NAME(data.name));
+      navigate("/dashboard");
+      setIsLoading(false);
+    } catch (error: any) {
+      toast.error(error);
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -34,6 +71,7 @@ const Register = () => {
         justifyContent: "center",
       }}
     >
+      {isLoading && <Loading />}
       <Card
         sx={{
           padding: "20px",

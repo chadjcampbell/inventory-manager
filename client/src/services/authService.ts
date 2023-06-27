@@ -1,7 +1,7 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 
-export const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+export const BACKEND_URL = import.meta.env.VITE_REACT_APP_BACKEND_URL;
 
 export type UserDataType = {
   name: String;
