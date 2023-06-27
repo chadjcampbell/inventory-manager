@@ -9,10 +9,16 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import AddProduct from "./pages/Dashboard/AddProduct";
 import Profile from "./pages/Dashboard/Profile";
 import ReportBug from "./pages/Dashboard/ReportBug";
+import axios from "axios";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+axios.defaults.withCredentials = true;
 
 function App() {
   return (
     <BrowserRouter>
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
