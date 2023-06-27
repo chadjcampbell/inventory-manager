@@ -1,11 +1,29 @@
 import { AppBar, Toolbar, Typography, Button } from "@mui/material";
 import Box from "@mui/material/Box";
-import { Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
+import { logoutUser } from "../../services/authService";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { SET_LOGIN, selectName } from "../../redux/features/auth/authSlice";
+import Loading from "../../components/Loading";
 
 const DashboardHeader = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const name = useSelector(selectName);
+
+  const logout = async () => {
+    setIsLoading(true);
+    await logoutUser();
+    dispatch(SET_LOGIN(false));
+    navigate("/login");
+    setIsLoading(false);
+  };
   return (
     <Box sx={{ flexGrow: 1 }}>
+      {isLoading && <Loading />}
       <AppBar sx={{ backgroundColor: "primary.main" }} position="static">
         <Toolbar>
           <Sidebar />
@@ -15,14 +33,9 @@ const DashboardHeader = () => {
             color="yellow"
             sx={{ flexGrow: 1, padding: "5px" }}
           >
-            Chad
+            {name}
           </Typography>
-          <Button
-            component={Link}
-            to="/logout"
-            variant="outlined"
-            color="inherit"
-          >
+          <Button onClick={logout} variant="outlined" color="inherit">
             Logout
           </Button>
         </Toolbar>

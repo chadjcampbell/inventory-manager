@@ -8,15 +8,42 @@ import {
   Typography,
 } from "@mui/material";
 import { FormEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { validEmail } from "./Register";
+import { loginUser } from "../../services/authService";
+import { toast } from "react-toastify";
+import { SET_LOGIN, SET_NAME } from "../../redux/features/auth/authSlice";
+import Loading from "../../components/Loading";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    // TODO: Submit the login form
+    if (!email || !password) {
+      return toast.error("All fields are required");
+    }
+
+    if (!validEmail(email)) {
+      return toast.error("Email must be valid");
+    }
+    const userData = { email, password };
+    setIsLoading(true);
+    try {
+      const data = await loginUser(userData);
+      dispatch(SET_LOGIN(true));
+      dispatch(SET_NAME(data.name));
+      navigate("/dashboard");
+      setIsLoading(false);
+    } catch (error: any) {
+      toast.error(error);
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -31,6 +58,7 @@ const Login = () => {
         justifyContent: "center",
       }}
     >
+      {isLoading && <Loading />}
       <Card
         sx={{
           padding: "20px",
