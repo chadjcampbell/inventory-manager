@@ -32,13 +32,13 @@ function App() {
   return (
     <BrowserRouter>
       <ToastContainer />
-
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgot" element={<Forgot />} />
         <Route path="/resetpassword/:resetToken" element={<Reset />} />
+
         <Route
           path="/dashboard"
           element={
@@ -47,6 +47,7 @@ function App() {
             </Layout>
           }
         />
+
         <Route
           path="/add-product"
           element={
