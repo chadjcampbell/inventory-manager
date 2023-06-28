@@ -13,6 +13,7 @@ import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import BugReportIcon from "@mui/icons-material/BugReport";
 import { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
+import HomeIcon from "@mui/icons-material/Home";
 import { Link } from "react-router-dom";
 
 type Anchor = "top" | "left" | "bottom" | "right";
@@ -116,6 +117,24 @@ const Sidebar = () => {
           </ListItem>
         </Link>
         <Divider />
+        <Link
+          style={{
+            textDecoration: "none",
+            color: "#673AB7",
+            marginTop: "auto",
+          }}
+          to={"/"}
+          onClick={toggleDrawer("left", false)}
+        >
+          <ListItem>
+            <ListItemButton>
+              <ListItemIcon>
+                <HomeIcon color="primary" />
+              </ListItemIcon>
+              <Typography fontSize="20px">Home Page</Typography>
+            </ListItemButton>
+          </ListItem>
+        </Link>
       </Drawer>
     </>
   );
