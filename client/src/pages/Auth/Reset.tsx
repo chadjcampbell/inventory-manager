@@ -8,15 +8,46 @@ import {
   Typography,
 } from "@mui/material";
 import { FormEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { SET_LOGIN, SET_NAME } from "../../redux/features/auth/authSlice";
+import { resetPassword } from "../../services/authService";
+import Loading from "../../components/Loading";
 
 const Reset = () => {
+  const { resetToken } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    // TODO: Submit the form
+    if (!password || !confirmPassword) {
+      return toast.error("All fields are required");
+    }
+    if (password.length < 6) {
+      return toast.error("Password must be at least 6 characters");
+    }
+    if (password !== confirmPassword) {
+      return toast.error("Passwords must match");
+    }
+    const userData = { password };
+    if (resetToken) {
+      setIsLoading(true);
+      try {
+        const data = await resetPassword(userData, resetToken);
+        dispatch(SET_LOGIN(true));
+        dispatch(SET_NAME(data.name));
+        navigate("/dashboard");
+        setIsLoading(false);
+      } catch (error: any) {
+        toast.error(error);
+        setIsLoading(false);
+      }
+    }
   };
 
   return (
@@ -31,6 +62,7 @@ const Reset = () => {
         justifyContent: "center",
       }}
     >
+      {isLoading && <Loading />}
       <Card
         sx={{
           padding: "20px",

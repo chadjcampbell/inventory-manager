@@ -12,8 +12,10 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { validEmail } from "./Register";
 import { forgotPassword } from "../../services/authService";
+import Loading from "../../components/Loading";
 
 const Forgot = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
 
   const handleSubmit = async (e: FormEvent) => {
@@ -25,7 +27,15 @@ const Forgot = () => {
       return toast.error("Email must be valid");
     }
     const userData = { email };
-    await forgotPassword(userData);
+    setIsLoading(true);
+    try {
+      await forgotPassword(userData);
+      setIsLoading(false);
+    } catch (error) {
+      console.error(error);
+      setIsLoading(false);
+    }
+
     setEmail("");
   };
 
@@ -41,6 +51,7 @@ const Forgot = () => {
         justifyContent: "center",
       }}
     >
+      {isLoading && <Loading />}
       <Card
         sx={{
           padding: "20px",

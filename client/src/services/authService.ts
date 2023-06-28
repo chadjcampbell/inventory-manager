@@ -5,7 +5,7 @@ export const BACKEND_URL = import.meta.env.VITE_REACT_APP_BACKEND_URL;
 
 export type UserDataType = {
   name?: String;
-  email: String;
+  email?: String;
   password?: String;
 };
 
@@ -75,6 +75,25 @@ export const forgotPassword = async (userData: UserDataType) => {
     if (response.statusText === "OK") {
       toast.success(response.data.message);
     }
+    return response.data;
+  } catch (error: any) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    toast.error(message);
+  }
+};
+
+export const resetPassword = async (
+  userData: UserDataType,
+  resetToken: string
+) => {
+  try {
+    const response = await axios.put(
+      BACKEND_URL + "/api/users/resetPassword/" + resetToken,
+      userData
+    );
     return response.data;
   } catch (error: any) {
     const message =
