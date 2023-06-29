@@ -5,6 +5,7 @@ const DashboardFooter = () => {
 
   return (
     <AppBar
+      component={"footer"}
       position="fixed"
       sx={{
         backgroundColor: "primary.main",

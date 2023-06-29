@@ -24,7 +24,11 @@ const DashboardHeader = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       {isLoading && <Loading />}
-      <AppBar sx={{ backgroundColor: "primary.main" }} position="static">
+      <AppBar
+        component={"header"}
+        sx={{ backgroundColor: "primary.main" }}
+        position="static"
+      >
         <Toolbar>
           <Sidebar />
           <Typography variant="h6">Hello,</Typography>{" "}

@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { Box } from "@mui/material";
 import DashboardFooter from "./DashboardFooter";
 import DashboardHeader from "./DashboardHeader";
 import { ReactNode } from "react";
@@ -13,7 +13,7 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <>
       <DashboardHeader />
-      <Container sx={{ minHeight: "80vh" }}>{children}</Container>
+      <Box sx={{ minHeight: "80vh", width: "100vw" }}>{children}</Box>
       <DashboardFooter />
     </>
   );
