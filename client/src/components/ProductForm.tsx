@@ -6,14 +6,16 @@ import {
   InputAdornment,
   Button,
 } from "@mui/material";
+import { ProductType } from "../pages/Dashboard/AddProduct";
+import { ChangeEvent } from "react";
 
 type ProductFormProps = {
-  product;
-  productImage;
-  imagePreview;
-  handleChange;
-  handleImageChange;
-  saveProduct;
+  product: ProductType;
+  productImage: File | null;
+  imagePreview: string | null;
+  handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  handleImageChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  saveProduct: (event: any) => Promise<void>;
 };
 
 const ProductForm = ({
@@ -23,7 +25,7 @@ const ProductForm = ({
   handleChange,
   handleImageChange,
   saveProduct,
-}) => {
+}: ProductFormProps) => {
   return (
     <form
       style={{
@@ -33,7 +35,7 @@ const ProductForm = ({
         flexDirection: "column",
         width: "100%",
       }}
-      onSubmit={(e) => handleSubmit(e)}
+      onSubmit={saveProduct}
     >
       <Container
         sx={{
@@ -51,6 +53,17 @@ const ProductForm = ({
           Supported formats: jpg, jpeg, png
         </Typography>
         <Input onChange={handleImageChange} type="file" />
+        <Container style={{ display: "flex", justifyContent: "center" }}>
+          {productImage ? (
+            <img
+              style={{ width: "200px", aspectRatio: "auto" }}
+              alt={product.name}
+              src={imagePreview!}
+            />
+          ) : (
+            <p>No image set for this product</p>
+          )}
+        </Container>
       </Container>
       <TextField
         fullWidth
