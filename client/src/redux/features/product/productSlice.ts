@@ -1,4 +1,4 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import productService from "./productService";
 import { ToastContent, toast } from "react-toastify";
 import { ProductType } from "../../../pages/Dashboard/AddProduct";
@@ -19,13 +19,14 @@ const initialState = {
   isSuccess: false,
   isLoading: false,
   message: "",
-};
+} as ProductStateType;
 
 export const createProduct = createAsyncThunk(
   "products/create",
-  async (formData: FormData, thunkAPI) => {
+  async (formData: FormData) => {
     try {
-      return await productService.createProduct(formData);
+      const data = await productService.createProduct(formData);
+      return data;
     } catch (error: any) {
       const message =
         (error.response &&
@@ -34,7 +35,6 @@ export const createProduct = createAsyncThunk(
         error.message ||
         error.toString();
       console.log(message);
-      return thunkAPI.rejectWithValue(message);
     }
   }
 );
@@ -51,15 +51,12 @@ const productSlice = createSlice({
     builder.addCase(createProduct.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(
-      createProduct.fulfilled,
-      (state: ProductStateType, action: PayloadAction<ProductType>) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.products.push(action.payload);
-        toast.success("Product created successfully");
-      }
-    );
+    builder.addCase(createProduct.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.isSuccess = true;
+      state.products.push(action.payload);
+      toast.success("Product created successfully");
+    });
     builder.addCase(createProduct.rejected, (state, action) => {
       state.isLoading = false;
       state.isError = true;

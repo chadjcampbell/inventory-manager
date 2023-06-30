@@ -1,13 +1,14 @@
 import { Card, Box } from "@mui/material";
 import { ChangeEvent, FormEvent, useState } from "react";
 import Loading from "../../components/Loading";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   createProduct,
   selectIsLoading,
 } from "../../redux/features/product/productSlice";
 import { useNavigate } from "react-router-dom";
 import ProductForm from "../../components/ProductForm";
+import { useAppDispatch } from "../../redux/store";
 
 export type ProductType = {
   name: string;
@@ -29,7 +30,7 @@ const AddProduct = () => {
   const [product, setProduct] = useState<ProductType>(initialSate);
   const [productImage, setProductImage] = useState<File | null>(null);
   const [imagePreview, setimagePreview] = useState<string | null>(null);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isLoading = useSelector(selectIsLoading);
 
@@ -56,7 +57,7 @@ const AddProduct = () => {
 
   const saveProduct = async (event: FormEvent) => {
     event.preventDefault();
-    const formData = new FormData();
+    const formData: FormData = new FormData();
     formData.append("name", name);
     formData.append("sku", generateSKU(category));
     formData.append("category", category);
