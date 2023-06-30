@@ -9,6 +9,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import ProductForm from "../../components/ProductForm";
 import { useAppDispatch } from "../../redux/store";
+import { toast } from "react-toastify";
 
 export type ProductType = {
   name: string;
@@ -33,7 +34,6 @@ const AddProduct = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isLoading = useSelector(selectIsLoading);
-
   const { name, category, price, quantity, description } = product;
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -55,9 +55,33 @@ const AddProduct = () => {
     return sku;
   };
 
+  const formValid = (data: FormData): boolean => {
+    const name = data.get("name");
+    const category = data.get("category");
+    const price = data.get("price");
+    const quantity = data.get("quantity");
+    const description = data.get("description");
+    if (!name || !category || !price || !quantity || !description) {
+      toast.error("All fields are required");
+      return false;
+    }
+    const priceCheck = new RegExp(/^\d+(?:\.\d{1,2})?$/);
+    const quantityCheck = new RegExp(/^\d+$/);
+    if (!priceCheck.test(price as string)) {
+      toast.error("Price must be valid");
+      return false;
+    }
+    if (!quantityCheck.test(quantity as string)) {
+      toast.error("Quantity must be valid");
+      return false;
+    }
+
+    return true;
+  };
+
   const saveProduct = async (event: FormEvent) => {
     event.preventDefault();
-    const formData: FormData = new FormData();
+    const formData = new FormData();
     formData.append("name", name);
     formData.append("sku", generateSKU(category));
     formData.append("category", category);
@@ -65,10 +89,10 @@ const AddProduct = () => {
     formData.append("price", price);
     formData.append("description", description);
     productImage !== null && formData.append("image", productImage);
-    console.log(...formData);
-    // TODO - fix all these type errors!
-    dispatch(createProduct(formData));
-    navigate("/dashboard");
+    if (formValid(formData)) {
+      dispatch(createProduct(formData));
+      navigate("/dashboard");
+    }
   };
 
   return (

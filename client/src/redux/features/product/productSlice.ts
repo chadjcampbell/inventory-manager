@@ -44,7 +44,7 @@ const productSlice = createSlice({
   initialState,
   reducers: {
     CALC_STORE_VALUE(state, action) {
-      console.log("store vlaue", state, action);
+      console.log("store value", state, action);
     },
   },
   extraReducers: (builder) => {
