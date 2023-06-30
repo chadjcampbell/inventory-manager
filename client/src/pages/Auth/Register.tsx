@@ -10,7 +10,7 @@ import {
 import { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { registerUser } from "../../services/authService";
+import { registerUser } from "../../redux/features/auth/authService";
 import { useDispatch } from "react-redux";
 import { SET_LOGIN, SET_NAME } from "../../redux/features/auth/authSlice";
 import Loading from "../../components/Loading";

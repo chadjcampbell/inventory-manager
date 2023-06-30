@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { SET_LOGIN, SET_NAME } from "../../redux/features/auth/authSlice";
-import { resetPassword } from "../../services/authService";
+import { resetPassword } from "../../redux/features/auth/authService";
 import Loading from "../../components/Loading";
 
 const Reset = () => {

@@ -1,7 +1,7 @@
 import { AppBar, Toolbar, Typography, Button } from "@mui/material";
 import Box from "@mui/material/Box";
 import Sidebar from "./Sidebar";
-import { logoutUser } from "../../services/authService";
+import { logoutUser } from "../../redux/features/auth/authService";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";

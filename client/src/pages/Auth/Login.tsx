@@ -11,7 +11,7 @@ import { FormEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { validEmail } from "./Register";
-import { loginUser } from "../../services/authService";
+import { loginUser } from "../../redux/features/auth/authService";
 import { toast } from "react-toastify";
 import { SET_LOGIN, SET_NAME } from "../../redux/features/auth/authSlice";
 import Loading from "../../components/Loading";

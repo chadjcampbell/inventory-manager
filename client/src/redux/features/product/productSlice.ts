@@ -1,6 +1,22 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import productService from "../../../services/productService";
-import { toast } from "react-toastify";
+import {
+  PayloadAction,
+  ThunkAction,
+  createAsyncThunk,
+  createSlice,
+} from "@reduxjs/toolkit";
+import productService from "./productService";
+import { ToastContent, toast } from "react-toastify";
+import { ProductType } from "../../../pages/Dashboard/AddProduct";
+import { Action } from "@remix-run/router";
+
+type ProductSateType = {
+  product: null | object;
+  products: [];
+  isError: boolean;
+  isSuccess: boolean;
+  isLoading: boolean;
+  message: string;
+};
 
 const initialState = {
   product: null,
@@ -13,7 +29,7 @@ const initialState = {
 
 export const createProduct = createAsyncThunk(
   "products/create",
-  async (formData, thunkAPI) => {
+  async (formData: FormData, thunkAPI) => {
     try {
       return await productService.createProduct(formData);
     } catch (error: any) {
@@ -34,7 +50,7 @@ const productSlice = createSlice({
   initialState,
   reducers: {
     CALC_STORE_VALUE(state, action) {
-      console.log("store vlaue");
+      console.log("store vlaue", state, action);
     },
   },
   extraReducers: (builder) => {
@@ -45,14 +61,14 @@ const productSlice = createSlice({
       state.isLoading = false;
       state.isSuccess = true;
       console.log(action.payload);
-      state.products.push(action.payload);
+      state.products.push(action.payload as ProductType);
       toast.success("Product created successfully");
     });
-    builder.addCase(createProduct.rejected, (state) => {
+    builder.addCase(createProduct.rejected, (state, action) => {
       state.isLoading = false;
       state.isError = true;
-      state.message = action.payload;
-      toast.error(action.payload);
+      state.message = action.payload as string;
+      toast.error(action.payload as ToastContent);
     });
   },
 });

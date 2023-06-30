@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { getLoginStatus } from "../services/authService";
+import { getLoginStatus } from "../redux/features/auth/authService";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { SET_LOGIN } from "../redux/features/auth/authSlice";

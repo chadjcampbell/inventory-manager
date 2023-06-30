@@ -11,7 +11,7 @@ import { FormEvent, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { validEmail } from "./Register";
-import { forgotPassword } from "../../services/authService";
+import { forgotPassword } from "../../redux/features/auth/authService";
 import Loading from "../../components/Loading";
 
 const Forgot = () => {
