@@ -1,17 +1,11 @@
-import {
-  PayloadAction,
-  ThunkAction,
-  createAsyncThunk,
-  createSlice,
-} from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import productService from "./productService";
 import { ToastContent, toast } from "react-toastify";
 import { ProductType } from "../../../pages/Dashboard/AddProduct";
-import { Action } from "@remix-run/router";
 
-type ProductSateType = {
-  product: null | object;
-  products: [];
+type ProductStateType = {
+  product: null | ProductType;
+  products: ProductType[];
   isError: boolean;
   isSuccess: boolean;
   isLoading: boolean;
@@ -57,13 +51,15 @@ const productSlice = createSlice({
     builder.addCase(createProduct.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(createProduct.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.isSuccess = true;
-      console.log(action.payload);
-      state.products.push(action.payload as ProductType);
-      toast.success("Product created successfully");
-    });
+    builder.addCase(
+      createProduct.fulfilled,
+      (state: ProductStateType, action: PayloadAction<ProductType>) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.products.push(action.payload);
+        toast.success("Product created successfully");
+      }
+    );
     builder.addCase(createProduct.rejected, (state, action) => {
       state.isLoading = false;
       state.isError = true;

@@ -1,6 +1,5 @@
 import { Card, Box } from "@mui/material";
 import { ChangeEvent, FormEvent, useState } from "react";
-
 import Loading from "../../components/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -67,7 +66,7 @@ const AddProduct = () => {
     productImage !== null && formData.append("image", productImage);
     console.log(...formData);
     // TODO - fix all these type errors!
-    // await dispatch(createProduct(formData));
+    dispatch(createProduct(formData));
     navigate("/dashboard");
   };
 
