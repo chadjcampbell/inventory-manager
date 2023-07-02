@@ -39,6 +39,19 @@ export const createProduct = createAsyncThunk(
   }
 );
 
+export const getProducts = createAsyncThunk("products/getAll", async () => {
+  try {
+    const data = await productService.getProducts();
+    return data;
+  } catch (error: any) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    console.log(message);
+  }
+});
+
 const productSlice = createSlice({
   name: "product",
   initialState,
@@ -48,21 +61,38 @@ const productSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(createProduct.pending, (state) => {
-      state.isLoading = true;
-    });
-    builder.addCase(createProduct.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.isSuccess = true;
-      state.products.push(action.payload);
-      toast.success("Product created successfully");
-    });
-    builder.addCase(createProduct.rejected, (state, action) => {
-      state.isLoading = false;
-      state.isError = true;
-      state.message = action.payload as string;
-      toast.error(action.payload as ToastContent);
-    });
+    builder
+      .addCase(createProduct.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createProduct.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.isError = false;
+        state.products.push(action.payload);
+        toast.success("Product created successfully");
+      })
+      .addCase(createProduct.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload as string;
+        toast.error(action.payload as ToastContent);
+      })
+      .addCase(getProducts.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getProducts.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.isError = false;
+        state.products = action.payload;
+      })
+      .addCase(getProducts.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload as string;
+        toast.error(action.payload as ToastContent);
+      });
   },
 });
 
