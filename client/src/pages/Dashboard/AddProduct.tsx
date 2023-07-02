@@ -17,6 +17,9 @@ export type ProductType = {
   price: string;
   quantity: string;
   description: string;
+  sku?: string;
+  value?: string;
+  action?: string;
 };
 
 const AddProduct = () => {

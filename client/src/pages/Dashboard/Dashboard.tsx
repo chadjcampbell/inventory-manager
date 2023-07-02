@@ -7,6 +7,7 @@ import { RootState, useAppDispatch } from "../../redux/store";
 import { Box } from "@mui/material";
 import ProductSummary from "../../components/ProductSummary";
 import ProductList from "../../components/ProductList";
+import Loading from "../../components/Loading";
 
 const Dashboard = () => {
   useAuthRedirect("/login");
@@ -28,8 +29,9 @@ const Dashboard = () => {
 
   return (
     <Box>
+      {isLoading && <Loading />}
       <ProductSummary />
-      <ProductList />
+      <ProductList products={products} />
     </Box>
   );
 };
