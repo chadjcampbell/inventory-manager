@@ -9,6 +9,7 @@ import ProductSummary from "../../components/ProductSummary";
 import ProductList from "../../components/ProductList";
 import Loading from "../../components/Loading";
 import Search from "../../components/Search";
+import { FILTER_PRODUCTS } from "../../redux/features/product/filterSlice";
 
 const Dashboard = () => {
   useAuthRedirect("/login");
@@ -25,6 +26,10 @@ const Dashboard = () => {
   ) => {
     setSearchTerm(event.currentTarget.value);
   };
+
+  useEffect(() => {
+    dispatch(FILTER_PRODUCTS({ products, searchTerm }));
+  }, [products, searchTerm]);
 
   useEffect(() => {
     if (isLoggedIn) {

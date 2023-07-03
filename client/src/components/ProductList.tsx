@@ -8,10 +8,12 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { ProductType } from "../pages/Dashboard/AddProduct";
-import { Box } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { useSelector } from "react-redux";
+import { selectFilteredProducts } from "../redux/features/product/filterSlice";
 
 interface Column {
   id: "sku" | "name" | "category" | "price" | "quantity" | "value" | "action";
@@ -66,13 +68,16 @@ export type ProductDataTableType = {
 };
 
 export default function ProductList({ products }: ProductListProps) {
-  const productsData: ProductDataTableType[] = products.map((product) => {
-    return {
-      ...product,
-      price: Number(product.price),
-      value: Number(product.price) * Number(product.quantity),
-    };
-  });
+  const filteredProducts = useSelector(selectFilteredProducts);
+  const productsData: ProductDataTableType[] = filteredProducts.map(
+    (product: ProductType) => {
+      return {
+        ...product,
+        price: Number(product.price),
+        value: Number(product.price) * Number(product.quantity),
+      };
+    }
+  );
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -87,7 +92,18 @@ export default function ProductList({ products }: ProductListProps) {
     setPage(0);
   };
 
-  return (
+  return productsData.length <= 0 ? (
+    <Container
+      sx={{
+        display: "flex",
+        width: "100%",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Typography variant="h5">No products found</Typography>
+    </Container>
+  ) : (
     <Paper sx={{ width: "auto", overflow: "hidden" }}>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
