@@ -13,7 +13,7 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
       <DashboardHeader />
-      <Box sx={{ minHeight: "80vh", width: "100vw", margin: "40px 0" }}>
+      <Box sx={{ minHeight: "80vh", width: "100%", margin: "40px 0" }}>
         {children}
       </Box>
       <DashboardFooter />

@@ -4,7 +4,7 @@ import { selectIsLoggedIn } from "../../redux/features/auth/authSlice";
 import { useEffect, useState } from "react";
 import { getProducts } from "../../redux/features/product/productSlice";
 import { RootState, useAppDispatch } from "../../redux/store";
-import { Container } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import ProductSummary from "../../components/ProductSummary";
 import ProductList from "../../components/ProductList";
 import Loading from "../../components/Loading";
@@ -42,12 +42,23 @@ const Dashboard = () => {
   }, [isLoggedIn, isError, message, dispatch]);
 
   return (
-    <Container>
+    <Box
+      sx={{
+        background:
+          "linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(220,196,246,1) 100%)",
+        width: "auto",
+        minHeight: "90vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <h1>Dashboard</h1>
       {isLoading && <Loading />}
-      <ProductSummary />
+      <ProductSummary products={products} />
       <Search searchTerm={searchTerm} handleSearchChange={handleSearchChange} />
       <ProductList products={products} />
-    </Container>
+    </Box>
   );
 };
 

@@ -104,63 +104,66 @@ export default function ProductList({ products }: ProductListProps) {
       <Typography variant="h5">No products found</Typography>
     </Container>
   ) : (
-    <Paper sx={{ width: "auto", overflow: "hidden" }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {productsData
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((product) => {
-                return (
-                  <TableRow
-                    hover
-                    role="checkbox"
-                    tabIndex={-1}
-                    key={product.sku}
+    <Container sx={{ marginBottom: "50px" }}>
+      <Paper sx={{ width: "100%", overflow: "hidden" }}>
+        <TableContainer sx={{ maxHeight: 440 }}>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead>
+              <TableRow>
+                {columns.map((column) => (
+                  <TableCell
+                    key={column.id}
+                    align={column.align}
+                    style={{ minWidth: column.minWidth }}
                   >
-                    {columns.map((column) => {
-                      const cellValue = product[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.id === "action" ? (
-                            <ActionCell product={product} />
-                          ) : column.format && typeof cellValue === "number" ? (
-                            column.format(cellValue)
-                          ) : (
-                            cellValue
-                          )}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[5, 10, 20]}
-        component="div"
-        count={products.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </Paper>
+                    {column.label}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {productsData
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((product) => {
+                  return (
+                    <TableRow
+                      hover
+                      role="checkbox"
+                      tabIndex={-1}
+                      key={product.sku}
+                    >
+                      {columns.map((column) => {
+                        const cellValue = product[column.id];
+                        return (
+                          <TableCell key={column.id} align={column.align}>
+                            {column.id === "action" ? (
+                              <ActionCell product={product} />
+                            ) : column.format &&
+                              typeof cellValue === "number" ? (
+                              column.format(cellValue)
+                            ) : (
+                              cellValue
+                            )}
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 20]}
+          component="div"
+          count={products.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Paper>
+    </Container>
   );
 }
 
