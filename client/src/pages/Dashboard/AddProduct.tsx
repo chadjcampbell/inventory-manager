@@ -12,18 +12,19 @@ import { useAppDispatch } from "../../redux/store";
 import { toast } from "react-toastify";
 
 export type ProductType = {
+  _id: string;
+  sku: string;
   name: string;
   category: string;
   price: string;
   quantity: string;
   description: string;
-  sku?: string;
-  value?: string;
-  action?: string;
 };
 
 const AddProduct = () => {
   const initialSate = {
+    _id: "",
+    sku: "",
     name: "",
     category: "",
     price: "",
