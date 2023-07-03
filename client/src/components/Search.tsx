@@ -3,7 +3,9 @@ import SearchIcon from "@mui/icons-material/Search";
 
 type SearchProps = {
   searchTerm: string;
-  handleSearchChange: any;
+  handleSearchChange:
+    | React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>
+    | undefined;
 };
 
 export default function Search({
@@ -21,7 +23,7 @@ export default function Search({
     >
       <TextField
         type="search"
-        label="Search"
+        label="Search products"
         value={searchTerm}
         onChange={handleSearchChange}
         sx={{ width: 300 }}

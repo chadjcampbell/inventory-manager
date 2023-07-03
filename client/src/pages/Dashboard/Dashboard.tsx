@@ -20,9 +20,10 @@ const Dashboard = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
 
-  //TODO figure out this type
-  const handleSearchChange = (event: any) => {
-    setSearchTerm(event.target.value);
+  const handleSearchChange = (
+    event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setSearchTerm(event.currentTarget.value);
   };
 
   useEffect(() => {
