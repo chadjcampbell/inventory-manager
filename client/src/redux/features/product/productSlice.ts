@@ -81,6 +81,14 @@ const productSlice = createSlice({
       });
       state.outOfStock = count;
     },
+    CALC_CATEGORY(state, action) {
+      const products = action.payload;
+      const catArr: string[] = products.map((item: ProductType) => {
+        return item.category;
+      });
+
+      state.category = [...new Set(catArr)];
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -118,7 +126,8 @@ const productSlice = createSlice({
   },
 });
 
-export const { CALC_STORE_VALUE, CALC_OUTOFSTOCK } = productSlice.actions;
+export const { CALC_STORE_VALUE, CALC_OUTOFSTOCK, CALC_CATEGORY } =
+  productSlice.actions;
 
 export const selectIsLoading = (state: any) => state.product.isLoading;
 export const selectTotalStoreValue = (state: any) =>

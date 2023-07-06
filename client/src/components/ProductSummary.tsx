@@ -8,8 +8,10 @@ import InfoBox from "./InfoBox";
 import { useAppDispatch } from "../redux/store";
 import { useSelector } from "react-redux";
 import {
+  CALC_CATEGORY,
   CALC_OUTOFSTOCK,
   CALC_STORE_VALUE,
+  selectCategory,
   selectOutOfStock,
   selectTotalStoreValue,
 } from "../redux/features/product/productSlice";
@@ -28,10 +30,12 @@ const ProductSummary = ({ products }: ProductSummaryProps) => {
   const dispatch = useAppDispatch();
   const totalStoreValue = useSelector(selectTotalStoreValue);
   const outOfStock = useSelector(selectOutOfStock);
+  const category = useSelector(selectCategory);
 
   useEffect(() => {
     dispatch(CALC_STORE_VALUE(products));
     dispatch(CALC_OUTOFSTOCK(products));
+    dispatch(CALC_CATEGORY(products));
   }, [dispatch, products]);
 
   return (
@@ -68,7 +72,7 @@ const ProductSummary = ({ products }: ProductSummaryProps) => {
         <InfoBox
           bgColor="blue"
           title="All Categories"
-          count={0}
+          count={category.length}
           icon={categoryIcon}
         />
       </Box>
