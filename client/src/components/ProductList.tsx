@@ -8,12 +8,11 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { ProductType } from "../pages/Dashboard/AddProduct";
-import { Box, Container, Typography } from "@mui/material";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import EditNoteIcon from "@mui/icons-material/EditNote";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { Container, Typography } from "@mui/material";
+
 import { useSelector } from "react-redux";
 import { selectFilteredProducts } from "../redux/features/product/filterSlice";
+import { ActionCell } from "./ActionCell";
 
 interface Column {
   id: "sku" | "name" | "category" | "price" | "quantity" | "value" | "action";
@@ -166,23 +165,3 @@ export default function ProductList({ products }: ProductListProps) {
     </Container>
   );
 }
-
-type ActionCellProps = {
-  product: ProductDataTableType;
-};
-
-const ActionCell = ({ product }: ActionCellProps) => {
-  return (
-    <Box>
-      <VisibilityIcon
-        fontSize="large"
-        sx={{ color: "purple", margin: "0 5px" }}
-      />
-      <EditNoteIcon fontSize="large" sx={{ color: "green", margin: "0 5px" }} />
-      <DeleteForeverIcon
-        fontSize="large"
-        sx={{ color: "red", margin: "0 5px" }}
-      />
-    </Box>
-  );
-};

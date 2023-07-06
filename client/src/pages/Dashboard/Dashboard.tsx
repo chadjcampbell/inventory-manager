@@ -35,7 +35,6 @@ const Dashboard = () => {
     if (isLoggedIn) {
       dispatch(getProducts());
     }
-    console.log(products);
     if (isError) {
       console.log(message);
     }

@@ -122,9 +122,43 @@ const productSlice = createSlice({
         state.isError = true;
         state.message = action.payload as string;
         toast.error(action.payload as ToastContent);
+      })
+      .addCase(deleteProduct.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteProduct.fulfilled, (state) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.isError = false;
+        toast.success("Product deleted successfully");
+      })
+      .addCase(deleteProduct.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload as string;
+        toast.error(action.payload as ToastContent);
       });
   },
 });
+
+export const deleteProduct = createAsyncThunk(
+  "products/delete",
+  async (id: string, thunkAPI) => {
+    try {
+      const data = await productService.deleteProduct(id);
+      return data;
+    } catch (error: any) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      console.log(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
 
 export const { CALC_STORE_VALUE, CALC_OUTOFSTOCK, CALC_CATEGORY } =
   productSlice.actions;

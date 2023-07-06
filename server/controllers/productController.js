@@ -124,15 +124,17 @@ const deleteProduct = asyncHandler(async (req, res) => {
     }
 
     // remove image from cloudinary
-    const imgId = product.image.public_id;
-    await cloudinary.uploader.destroy(imgId);
+    if (product.image.public_id) {
+      const imgId = product.image.public_id;
+      await cloudinary.uploader.destroy(imgId);
+    }
 
     // then remove from mongodb
     await product.deleteOne();
     res.status(200).json({ message: "Product deleted" });
   } catch (error) {
-    res.status(404);
-    throw new Error("Product not found");
+    res.status(400);
+    throw new Error("Error, product deletion failed");
   }
 });
 

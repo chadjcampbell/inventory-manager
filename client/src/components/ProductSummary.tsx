@@ -58,7 +58,10 @@ const ProductSummary = ({ products }: ProductSummaryProps) => {
         <InfoBox
           bgColor="green"
           title="Total Store Value"
-          count={"$" + totalStoreValue.toFixed(2)}
+          count={totalStoreValue.toLocaleString("en-US", {
+            style: "currency",
+            currency: "USD",
+          })}
           icon={earningIcon}
         />
 
