@@ -4,7 +4,7 @@ import { selectIsLoggedIn } from "../../redux/features/auth/authSlice";
 import { useEffect, useState } from "react";
 import { getProducts } from "../../redux/features/product/productSlice";
 import { RootState, useAppDispatch } from "../../redux/store";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import ProductSummary from "../../components/ProductSummary";
 import ProductList from "../../components/ProductList";
 import Loading from "../../components/Loading";

@@ -5,6 +5,13 @@ import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlin
 import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 import { ProductType } from "../pages/Dashboard/AddProduct";
 import InfoBox from "./InfoBox";
+import { useAppDispatch } from "../redux/store";
+import { useSelector } from "react-redux";
+import {
+  CALC_STORE_VALUE,
+  selectTotalStoreValue,
+} from "../redux/features/product/productSlice";
+import { useEffect } from "react";
 
 const earningIcon = <MonetizationOnOutlinedIcon fontSize="large" />;
 const productIcon = <ShoppingCartOutlinedIcon fontSize="large" />;
@@ -16,6 +23,13 @@ type ProductSummaryProps = {
 };
 
 const ProductSummary = ({ products }: ProductSummaryProps) => {
+  const dispatch = useAppDispatch();
+  const totalStoreValue = useSelector(selectTotalStoreValue);
+
+  useEffect(() => {
+    dispatch(CALC_STORE_VALUE(products));
+  }, [dispatch, products]);
+
   return (
     <Container>
       <Box
@@ -36,7 +50,7 @@ const ProductSummary = ({ products }: ProductSummaryProps) => {
         <InfoBox
           bgColor="green"
           title="Total Store Value"
-          count={0}
+          count={"$" + totalStoreValue}
           icon={earningIcon}
         />
 

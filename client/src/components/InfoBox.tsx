@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 type InfoBoxProps = {
   bgColor: string;
   title: string;
-  count: number;
+  count: number | string;
   icon: ReactNode;
 };
 
