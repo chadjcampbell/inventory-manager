@@ -8,7 +8,9 @@ import InfoBox from "./InfoBox";
 import { useAppDispatch } from "../redux/store";
 import { useSelector } from "react-redux";
 import {
+  CALC_OUTOFSTOCK,
   CALC_STORE_VALUE,
+  selectOutOfStock,
   selectTotalStoreValue,
 } from "../redux/features/product/productSlice";
 import { useEffect } from "react";
@@ -25,9 +27,11 @@ type ProductSummaryProps = {
 const ProductSummary = ({ products }: ProductSummaryProps) => {
   const dispatch = useAppDispatch();
   const totalStoreValue = useSelector(selectTotalStoreValue);
+  const outOfStock = useSelector(selectOutOfStock);
 
   useEffect(() => {
     dispatch(CALC_STORE_VALUE(products));
+    dispatch(CALC_OUTOFSTOCK(products));
   }, [dispatch, products]);
 
   return (
@@ -50,14 +54,14 @@ const ProductSummary = ({ products }: ProductSummaryProps) => {
         <InfoBox
           bgColor="green"
           title="Total Store Value"
-          count={"$" + totalStoreValue}
+          count={"$" + totalStoreValue.toFixed(2)}
           icon={earningIcon}
         />
 
         <InfoBox
           bgColor="red"
           title="Out of Stock"
-          count={0}
+          count={outOfStock}
           icon={outOfStockIcon}
         />
 
