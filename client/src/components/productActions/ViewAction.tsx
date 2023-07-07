@@ -2,6 +2,8 @@ import { Button, Typography, Modal, Box } from "@mui/material";
 import { useState } from "react";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { ActionCellProps, modalStyle } from "./ActionCell";
+import ViewActionDisplay from "./ViewActionDisplay";
+import CloseIcon from "@mui/icons-material/Close";
 
 export const ViewAction = ({ product }: ActionCellProps) => {
   const [open, setOpen] = useState(false);
@@ -36,12 +38,13 @@ export const ViewAction = ({ product }: ActionCellProps) => {
         aria-describedby="keep-mounted-modal-description"
       >
         <Box sx={modalStyle}>
-          <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
-          <Typography id="keep-mounted-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
+          <Button
+            sx={{ position: "absolute", right: "0" }}
+            onClick={handleClose}
+          >
+            <CloseIcon />
+          </Button>
+          <ViewActionDisplay product={product} />
         </Box>
       </Modal>
     </div>

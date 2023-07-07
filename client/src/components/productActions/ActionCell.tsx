@@ -17,6 +17,8 @@ export const modalStyle = {
   p: 4,
   minWidth: "300px",
   maxWidth: "90%",
+  maxHeight: "90vh",
+  overflowY: "auto",
 };
 
 export type ActionCellProps = {

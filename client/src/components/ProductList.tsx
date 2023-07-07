@@ -45,7 +45,12 @@ const columns: readonly Column[] = [
     label: "Value",
     minWidth: 50,
     align: "right",
-    format: (value: number) => `$${value.toFixed(2)}`,
+    format: (value: number) => {
+      return value.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD",
+      });
+    },
   },
   { id: "action", label: "Action", minWidth: 170, align: "center" },
 ];
@@ -64,6 +69,13 @@ export type ProductDataTableType = {
   sku: string;
   value: number;
   action?: string;
+  image?: {
+    public_id: string;
+    fileName: string;
+    filePath: string;
+    fileType: string;
+    fileSize: string;
+  };
 };
 
 export default function ProductList({ products }: ProductListProps) {
