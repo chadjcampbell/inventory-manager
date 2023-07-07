@@ -7,7 +7,7 @@ import Reset from "./pages/Auth/Reset";
 import Layout from "./pages/Dashboard/Layout";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import AddProduct from "./pages/Dashboard/AddProduct";
-import Profile from "./pages/Dashboard/Profile";
+import Profile from "./pages/Profile/Profile";
 import ReportBug from "./pages/Dashboard/ReportBug";
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
