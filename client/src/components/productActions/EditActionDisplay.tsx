@@ -3,38 +3,38 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import Loading from "../../components/Loading";
 import { useSelector } from "react-redux";
 import {
-  createProduct,
+  getProducts,
   selectIsLoading,
+  updateProduct,
 } from "../../redux/features/product/productSlice";
 import { useNavigate } from "react-router-dom";
 import ProductForm from "../../components/ProductForm";
 import { useAppDispatch } from "../../redux/store";
 import { toast } from "react-toastify";
+import { ProductType } from "../../pages/Dashboard/AddProduct";
+import { ProductDataTableType } from "../ProductList";
 
-export type ProductType = {
-  _id: string;
-  sku: string;
-  name: string;
-  category: string;
-  price: string;
-  quantity: string;
-  description: string;
+type EditActionDisplayProps = {
+  initialProduct: ProductDataTableType;
+  handleClose: () => void;
 };
 
-const AddProduct = () => {
+const EditActionDisplay = ({
+  initialProduct,
+  handleClose,
+}: EditActionDisplayProps) => {
   const initialSate = {
-    _id: "",
-    sku: "",
-    name: "",
-    category: "",
-    price: "",
-    quantity: "",
-    description: "",
+    _id: initialProduct._id,
+    sku: initialProduct.sku,
+    name: initialProduct.name,
+    category: initialProduct.category,
+    price: initialProduct.price.toString(),
+    quantity: initialProduct.quantity,
+    description: initialProduct.description,
+    image: initialProduct.image,
   };
 
   const [product, setProduct] = useState<ProductType>(initialSate);
-  const [productImage, setProductImage] = useState<File | null>(null);
-  const [imagePreview, setimagePreview] = useState<string | null>(null);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isLoading = useSelector(selectIsLoading);
@@ -43,20 +43,6 @@ const AddProduct = () => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     let value = event.target.value;
     setProduct({ ...product, [event.target.name]: value });
-  };
-
-  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files !== null) {
-      setProductImage(event.target.files[0]);
-      setimagePreview(URL.createObjectURL(event.target.files[0]));
-    }
-  };
-
-  const generateSKU = (category: string) => {
-    const letter: string = category.slice(0, 3).toUpperCase();
-    const number = Date.now();
-    const sku = letter + "-" + number;
-    return sku;
   };
 
   const formValid = (data: FormData): boolean => {
@@ -83,27 +69,26 @@ const AddProduct = () => {
     return true;
   };
 
-  const saveProduct = async (event: FormEvent) => {
+  const saveChanges = async (event: FormEvent) => {
     event.preventDefault();
     const formData = new FormData();
     formData.append("name", name);
-    formData.append("sku", generateSKU(category));
     formData.append("category", category);
     formData.append("quantity", quantity);
     formData.append("price", price);
     formData.append("description", description);
-    productImage !== null && formData.append("image", productImage);
     if (formValid(formData)) {
-      dispatch(createProduct(formData));
+      const id = product._id;
+      await dispatch(updateProduct({ id, formData }));
+      await dispatch(getProducts());
       navigate("/dashboard");
+      handleClose();
     }
   };
 
   return (
     <Box
       sx={{
-        background:
-          "linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(220,196,246,1) 100%)",
         width: "100%",
         height: "100vh",
         display: "flex",
@@ -116,7 +101,6 @@ const AddProduct = () => {
       <Card
         sx={{
           padding: "20px",
-          maxWidth: "650px",
           display: "flex",
           flexGrow: "1",
           flexDirection: "column",
@@ -124,19 +108,16 @@ const AddProduct = () => {
           justifyContent: "center",
         }}
       >
-        <h1>Add New Product</h1>
+        <h1>Edit Product</h1>
         <ProductForm
           product={product}
-          productImage={productImage}
-          imagePreview={imagePreview}
           handleChange={handleChange}
-          handleImageChange={handleImageChange}
-          saveProduct={saveProduct}
-          isEdit={false}
+          saveProduct={saveChanges}
+          isEdit={true}
         />
       </Card>
     </Box>
   );
 };
 
-export default AddProduct;
+export default EditActionDisplay;

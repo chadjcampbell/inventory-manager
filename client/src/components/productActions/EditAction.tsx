@@ -2,6 +2,8 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import { Button, Typography, Modal, Box } from "@mui/material";
 import { useState } from "react";
 import { ActionCellProps, modalStyle } from "./ActionCell";
+import EditActionDisplay from "./EditActionDisplay";
+import CloseIcon from "@mui/icons-material/Close";
 
 export const EditAction = ({ product }: ActionCellProps) => {
   const [open, setOpen] = useState(false);
@@ -36,12 +38,16 @@ export const EditAction = ({ product }: ActionCellProps) => {
         aria-describedby="keep-mounted-modal-description"
       >
         <Box sx={modalStyle}>
-          <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
-          <Typography id="keep-mounted-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
+          <Button
+            sx={{ position: "absolute", right: "0" }}
+            onClick={handleClose}
+          >
+            <CloseIcon />
+          </Button>
+          <EditActionDisplay
+            handleClose={handleClose}
+            initialProduct={product}
+          />
         </Box>
       </Modal>
     </div>

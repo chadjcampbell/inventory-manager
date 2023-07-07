@@ -147,11 +147,6 @@ const updateProduct = [
     .notEmpty()
     .escape()
     .withMessage("Please enter product name"),
-  body("sku")
-    .trim()
-    .notEmpty()
-    .escape()
-    .withMessage("Please enter product sku"),
   body("category")
     .trim()
     .notEmpty()
@@ -173,7 +168,7 @@ const updateProduct = [
     .escape()
     .withMessage("Please enter product description"),
   asyncHandler(async (req, res) => {
-    const { name, sku, category, quantity, price, description } = req.body;
+    const { name, category, quantity, price, description } = req.body;
     const { id } = req.params;
     let product;
     try {

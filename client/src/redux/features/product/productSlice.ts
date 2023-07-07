@@ -137,6 +137,21 @@ const productSlice = createSlice({
         state.isError = true;
         state.message = action.payload as string;
         toast.error(action.payload as ToastContent);
+      })
+      .addCase(updateProduct.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateProduct.fulfilled, (state) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.isError = false;
+        toast.success("Product updated successfully");
+      })
+      .addCase(updateProduct.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload as string;
+        toast.error(action.payload as ToastContent);
       });
   },
 });
@@ -146,6 +161,26 @@ export const deleteProduct = createAsyncThunk(
   async (id: string, thunkAPI) => {
     try {
       const data = await productService.deleteProduct(id);
+      return data;
+    } catch (error: any) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      console.log(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const updateProduct = createAsyncThunk(
+  "products/updateProduct",
+  async (productData: { id: string; formData: FormData }, thunkAPI) => {
+    const { id, formData } = productData;
+    try {
+      const data = await productService.updateProduct(id, formData);
       return data;
     } catch (error: any) {
       const message =
