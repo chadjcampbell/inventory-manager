@@ -12,7 +12,7 @@ import { Container, Typography } from "@mui/material";
 
 import { useSelector } from "react-redux";
 import { selectFilteredProducts } from "../redux/features/product/filterSlice";
-import { ActionCell } from "./ActionCell";
+import { ActionCell } from "./productActions/ActionCell";
 
 interface Column {
   id: "sku" | "name" | "category" | "price" | "quantity" | "value" | "action";
