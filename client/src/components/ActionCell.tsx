@@ -45,11 +45,23 @@ const ViewAction = ({ product }: ActionCellProps) => {
 
   return (
     <div>
-      <Button sx={{ padding: "0" }} onClick={handleOpen}>
+      <Button
+        sx={{
+          padding: "0",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+        onClick={handleOpen}
+      >
         <VisibilityIcon
-          fontSize="large"
+          fontSize="medium"
           sx={{ color: "purple", margin: "0 5px" }}
         />
+        <Typography color="purple" variant="caption">
+          View
+        </Typography>
       </Button>
       <Modal
         keepMounted
@@ -78,11 +90,23 @@ const EditAction = ({ product }: ActionCellProps) => {
 
   return (
     <div>
-      <Button sx={{ padding: "0" }} onClick={handleOpen}>
+      <Button
+        sx={{
+          padding: "0",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+        onClick={handleOpen}
+      >
         <EditNoteIcon
-          fontSize="large"
+          fontSize="medium"
           sx={{ color: "green", margin: "0 5px" }}
         />
+        <Typography color="green" variant="caption">
+          Edit
+        </Typography>
       </Button>
       <Modal
         keepMounted
@@ -118,11 +142,23 @@ const DeleteAction = ({ product }: ActionCellProps) => {
 
   return (
     <div>
-      <Button sx={{ padding: "0" }} onClick={handleOpen}>
+      <Button
+        sx={{
+          padding: "0",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+        onClick={handleOpen}
+      >
         <DeleteForeverIcon
-          fontSize="large"
+          fontSize="medium"
           sx={{ color: "red", margin: "0 5px" }}
         />
+        <Typography color="red" variant="caption">
+          Delete
+        </Typography>
       </Button>
       <Modal
         keepMounted
