@@ -138,6 +138,11 @@ const ViewActionDisplay = ({ product }: ViewActionDisplayProps) => {
           </Typography>
           <Typography>{product.description}</Typography>
         </Box>
+        <br />
+        <code>Created at: {new Date(product.createdAt).toLocaleString()}</code>
+        <code>
+          Last updated: {new Date(product.updatedAt).toLocaleString()}
+        </code>
       </Container>
     </Container>
   );

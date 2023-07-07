@@ -76,6 +76,8 @@ export type ProductDataTableType = {
     fileType: string;
     fileSize: string;
   };
+  createdAt: string;
+  updatedAt: string;
 };
 
 export default function ProductList({ products }: ProductListProps) {
