@@ -27,6 +27,23 @@ const theme = createTheme({
   },
 });
 
+export interface MyTheme {
+  palette?: {
+    primary: {
+      light: string;
+      main: string;
+      dark: string;
+      contrastText: string;
+    };
+    secondary: {
+      light: string;
+      main: string;
+      dark: string;
+      contrastText: string;
+    };
+  };
+}
+
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <Provider store={store}>
