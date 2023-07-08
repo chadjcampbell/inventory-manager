@@ -8,7 +8,7 @@ import { useTheme } from "@emotion/react";
 import { MyTheme } from "../../main";
 import { Link } from "react-router-dom";
 
-type ProfileData = {
+export type ProfileData = {
   name: string;
   phone: string;
   photo: string;

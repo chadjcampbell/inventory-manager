@@ -17,6 +17,7 @@ import { useEffect } from "react";
 import { getLoginStatus } from "./redux/features/auth/authService";
 import { SET_LOGIN } from "./redux/features/auth/authSlice";
 import NotFound from "./components/NotFound";
+import EditProfile from "./pages/Profile/EditProflie";
 
 axios.defaults.withCredentials = true;
 
@@ -62,6 +63,14 @@ function App() {
           element={
             <Layout>
               <Profile />
+            </Layout>
+          }
+        />
+        <Route
+          path="/edit-profile"
+          element={
+            <Layout>
+              <EditProfile />
             </Layout>
           }
         />
