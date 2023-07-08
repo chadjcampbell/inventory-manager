@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/features/auth/authSlice";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { ProfileData } from "./Profile";
 import {
   Container,
@@ -13,13 +13,22 @@ import {
 } from "@mui/material";
 
 import Loading from "../../components/Loading";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const EditProfile = () => {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const user = useSelector(selectUser);
   const [profile, setProfile] = useState<ProfileData>(user);
   const [profileImage, setProfileImage] = useState<File | null>(null);
+  const { email } = user;
+
+  useEffect(() => {
+    if (!email) {
+      navigate("/profile");
+    }
+  }, [email]);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     let value = event.target.value;
@@ -32,8 +41,41 @@ const EditProfile = () => {
     }
   };
 
-  const saveProfile = (event: FormEvent) => {
+  const saveProfile = async (event: FormEvent) => {
     event.preventDefault();
+    setIsLoading(true);
+    try {
+      // handle image upload to cloudinary
+      let imageURL;
+      if (
+        profileImage &&
+        (profileImage.type === "image/jpeg" ||
+          profileImage.type === "image/jpg" ||
+          profileImage.type === "image/png" ||
+          profileImage.type === "image/webp")
+      ) {
+        const image = new FormData();
+        image.append("file", profileImage);
+        image.append("cloud_name", "duu3fdfk0");
+        image.append("upload_preset", "zx0zcbpv");
+
+        // save to cloudinary
+        const response = await fetch(
+          "https://api.cloudinary.com/v1_1/duu3fdfk0/image/upload",
+          { method: "post", body: image }
+        );
+        const imageData = await response.json();
+        imageURL = imageData.url.toString();
+
+        // TODO - send all data to mongoDB
+        toast.success("Profile updated successfully");
+        setIsLoading(false);
+      }
+    } catch (error: any) {
+      console.log(error);
+      setIsLoading(false);
+      toast.error(error.message);
+    }
   };
 
   return (
@@ -126,9 +168,9 @@ const EditProfile = () => {
               >
                 <Typography>Profile Image:</Typography>
                 <Typography variant="subtitle2">
-                  Supported formats: jpg, jpeg, png
+                  Supported formats: jpg, jpeg, png, webp
                 </Typography>
-                <Input onChange={handleImageChange} type="file" />
+                <Input name="image" onChange={handleImageChange} type="file" />
               </Container>
               <Box
                 sx={{
