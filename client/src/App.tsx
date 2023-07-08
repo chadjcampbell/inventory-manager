@@ -16,6 +16,7 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { getLoginStatus } from "./redux/features/auth/authService";
 import { SET_LOGIN } from "./redux/features/auth/authSlice";
+import NotFound from "./components/NotFound";
 
 axios.defaults.withCredentials = true;
 
@@ -72,6 +73,7 @@ function App() {
             </Layout>
           }
         />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
