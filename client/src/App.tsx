@@ -8,7 +8,7 @@ import Layout from "./pages/Dashboard/Layout";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import AddProduct from "./pages/Dashboard/AddProduct";
 import Profile from "./pages/Profile/Profile";
-import ReportBug from "./pages/Dashboard/ReportBug";
+import Contact from "./pages/Dashboard/Contact";
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -78,7 +78,7 @@ function App() {
           path="/report-bug"
           element={
             <Layout>
-              <ReportBug />
+              <Contact />
             </Layout>
           }
         />

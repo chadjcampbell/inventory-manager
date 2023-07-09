@@ -10,7 +10,7 @@ import {
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-import BugReportIcon from "@mui/icons-material/BugReport";
+import ConnectWithoutContactOutlinedIcon from "@mui/icons-material/ConnectWithoutContactOutlined";
 import { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
@@ -110,9 +110,9 @@ const Sidebar = () => {
           <ListItem>
             <ListItemButton>
               <ListItemIcon>
-                <BugReportIcon color="primary" />
+                <ConnectWithoutContactOutlinedIcon color="primary" />
               </ListItemIcon>
-              <Typography fontSize="20px">Report Bug</Typography>
+              <Typography fontSize="20px">Contact</Typography>
             </ListItemButton>
           </ListItem>
         </Link>
