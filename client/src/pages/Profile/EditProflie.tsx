@@ -15,6 +15,14 @@ import {
 import Loading from "../../components/Loading";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { updateUser } from "../../redux/features/auth/authService";
+
+export type userUpdateData = {
+  name: string;
+  phone: string;
+  bio: string;
+  photo: string;
+};
 
 const EditProfile = () => {
   const navigate = useNavigate();
@@ -46,7 +54,7 @@ const EditProfile = () => {
     setIsLoading(true);
     try {
       // handle image upload to cloudinary
-      let imageURL;
+      let imageURL: string;
       if (
         profileImage &&
         (profileImage.type === "image/jpeg" ||
@@ -66,11 +74,22 @@ const EditProfile = () => {
         );
         const imageData = await response.json();
         imageURL = imageData.url.toString();
-
-        // TODO - send all data to mongoDB
-        toast.success("Profile updated successfully");
-        setIsLoading(false);
       }
+
+      // set photo
+      const newPhoto = profileImage && imageURL ? imageURL : profile.photo;
+
+      // send all data to mongoDB
+      const formData: userUpdateData = {
+        name: profile.name,
+        phone: profile.phone,
+        bio: profile.bio,
+        photo: newPhoto,
+      };
+      const data = await updateUser(formData);
+      console.log(data);
+      toast.success("User updated successfully");
+      navigate("/profile");
     } catch (error: any) {
       console.log(error);
       setIsLoading(false);
@@ -102,7 +121,9 @@ const EditProfile = () => {
               }}
             >
               <img
-                style={{ maxWidth: "300px" }}
+                style={{
+                  maxWidth: "300px",
+                }}
                 src={profile.photo}
                 alt={profile.name}
               />

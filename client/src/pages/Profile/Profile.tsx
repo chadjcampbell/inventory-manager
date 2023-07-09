@@ -56,7 +56,7 @@ const Profile = () => {
             }}
           >
             <img
-              style={{ maxWidth: "300px" }}
+              style={{ maxWidth: "300px", borderRadius: "50%" }}
               src={profile?.photo}
               alt={profile?.name}
             />
@@ -115,6 +115,7 @@ const Profile = () => {
                 alignItems: "flex-start",
                 justifyContent: "center",
                 flexDirection: "column",
+                maxWidth: "400px",
               }}
             >
               <Typography sx={{ marginRight: "5px", fontWeight: "bold" }}>
