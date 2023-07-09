@@ -54,7 +54,7 @@ const EditProfile = () => {
     setIsLoading(true);
     try {
       // handle image upload to cloudinary
-      let imageURL: string;
+      let imageURL: string = "";
       if (
         profileImage &&
         (profileImage.type === "image/jpeg" ||
@@ -77,7 +77,7 @@ const EditProfile = () => {
       }
 
       // set photo
-      const newPhoto = profileImage && imageURL ? imageURL : profile.photo;
+      const newPhoto = imageURL !== "" ? imageURL : profile.photo;
 
       // send all data to mongoDB
       const formData: userUpdateData = {
