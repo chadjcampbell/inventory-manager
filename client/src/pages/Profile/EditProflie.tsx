@@ -16,6 +16,7 @@ import Loading from "../../components/Loading";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { updateUser } from "../../redux/features/auth/authService";
+import ChangePassword from "./ChangePassword";
 
 export type userUpdateData = {
   name: string;
@@ -221,6 +222,7 @@ const EditProfile = () => {
           </Container>
         </form>
       </Paper>
+      <ChangePassword />
     </Container>
   );
 };

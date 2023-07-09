@@ -1,6 +1,7 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import { userUpdateData } from "../../../pages/Profile/EditProflie";
+import { PasswordUpdateData } from "../../../pages/Profile/ChangePassword";
 
 export const BACKEND_URL = import.meta.env.VITE_REACT_APP_BACKEND_URL;
 
@@ -135,6 +136,22 @@ export const updateUser = async (formData: userUpdateData) => {
   try {
     const response = await axios.patch(
       BACKEND_URL + "/api/users/updateUser",
+      formData
+    );
+    return response.data;
+  } catch (error: any) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    toast.error(message);
+  }
+};
+
+export const changePassword = async (formData: PasswordUpdateData) => {
+  try {
+    const response = await axios.patch(
+      BACKEND_URL + "/api/users/changePassword",
       formData
     );
     return response.data;
