@@ -7,15 +7,26 @@ import {
   Container,
   Paper,
 } from "@mui/material";
+import { toast } from "react-toastify";
+import axios from "axios";
+import { BACKEND_URL } from "../../redux/features/auth/authService";
 
 export default function Contact() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
+  const data = { subject, message };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    //
+
+    try {
+      const response = await axios.post(`${BACKEND_URL}/api/contactUs`, data);
+      setSubject("");
+      setMessage("");
+      toast.success(response.data.message);
+    } catch (error: any) {
+      toast.error(error.message);
+    }
   };
 
   return (
@@ -35,20 +46,11 @@ export default function Contact() {
             <form onSubmit={handleSubmit}>
               <TextField
                 fullWidth
-                label="Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                label="Subject"
+                value={subject}
+                onChange={(e) => setSubject(e.target.value)}
                 margin="normal"
                 required
-              />
-              <TextField
-                fullWidth
-                label="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                margin="normal"
-                required
-                type="email"
               />
               <TextField
                 fullWidth
