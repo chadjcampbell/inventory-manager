@@ -1,5 +1,4 @@
 import { useSelector } from "react-redux";
-import useAuthRedirect from "../../customHooks/useAuthRedirect";
 import { selectIsLoggedIn } from "../../redux/features/auth/authSlice";
 import { useEffect, useState } from "react";
 import { getProducts } from "../../redux/features/product/productSlice";
@@ -12,7 +11,6 @@ import Search from "../../components/Search";
 import { FILTER_PRODUCTS } from "../../redux/features/product/filterSlice";
 
 const Dashboard = () => {
-  useAuthRedirect("/login");
   const dispatch = useAppDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const { products, isLoading, isError, message } = useSelector(

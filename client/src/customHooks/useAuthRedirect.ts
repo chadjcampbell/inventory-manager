@@ -21,7 +21,7 @@ const useAuthRedirect = (path: string) => {
       return true;
     };
     authRedirect();
-  }, [navigate, path, dispatch]);
+  }, []);
 };
 
 export default useAuthRedirect;
