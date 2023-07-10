@@ -23,6 +23,28 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const handleGuestLogin = async () => {
+    const userData = { email: "chadjcampbell@gmail.com", password: "fakepass" };
+    for (let i = 0; i < 23; ) {
+      setTimeout(() => {
+        setEmail((prev) => prev + userData.email[i]);
+        i++;
+      }, 100);
+    }
+
+    /*     setIsLoading(true);
+    try {
+      const data = await loginUser(userData);
+      dispatch(SET_LOGIN(true));
+      dispatch(SET_NAME(data.name));
+      navigate("/dashboard");
+      setIsLoading(false);
+    } catch (error: any) {
+      toast.error(error);
+      setIsLoading(false);
+    } */
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!email || !password) {
@@ -131,6 +153,14 @@ const Login = () => {
             color="primary"
           >
             Login
+          </Button>
+          <Button
+            onClick={handleGuestLogin}
+            sx={{ margin: "30px" }}
+            variant="contained"
+            color="info"
+          >
+            Guest Account
           </Button>
         </form>
         <Typography
