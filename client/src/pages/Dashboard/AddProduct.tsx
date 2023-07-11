@@ -94,7 +94,7 @@ const AddProduct = () => {
     formData.append("description", description);
     productImage !== null && formData.append("image", productImage);
     if (formValid(formData)) {
-      dispatch(createProduct(formData));
+      await dispatch(createProduct(formData));
       navigate("/dashboard");
     }
   };
