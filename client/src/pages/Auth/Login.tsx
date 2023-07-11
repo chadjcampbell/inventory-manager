@@ -22,14 +22,16 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [index, setIndex] = useState(0);
 
   const handleGuestLogin = async () => {
     const userData = { email: "chadjcampbell@gmail.com", password: "fakepass" };
-    for (let i = 0; i < 23; ) {
+    if (index < userData.email.length - 1) {
+      setEmail((prev) => prev + userData.email[index]);
+      setIndex((index) => index + 1);
       setTimeout(() => {
-        setEmail((prev) => prev + userData.email[i]);
-        i++;
-      }, 100);
+        handleGuestLogin();
+      }, 500);
     }
 
     /*     setIsLoading(true);
