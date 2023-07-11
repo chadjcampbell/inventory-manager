@@ -94,8 +94,12 @@ const AddProduct = () => {
     formData.append("description", description);
     productImage !== null && formData.append("image", productImage);
     if (formValid(formData)) {
-      await dispatch(createProduct(formData));
-      navigate("/dashboard");
+      try {
+        await dispatch(createProduct(formData));
+        navigate("/dashboard");
+      } catch (error: any) {
+        toast.error(error.message);
+      }
     }
   };
 
