@@ -3,6 +3,8 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { toast } from "react-toastify";
 import { changePassword } from "../../redux/features/auth/authService";
 import { useNavigate } from "react-router-dom";
+import { selectUser } from "../../redux/features/auth/authSlice";
+import { useSelector } from "react-redux";
 
 const initialState = {
   oldPassword: "",
@@ -19,6 +21,7 @@ const ChangePassword = () => {
   const [formData, setFormData] = useState(initialState);
   const { oldPassword, password, password2 } = formData;
   const navigate = useNavigate();
+  const user = useSelector(selectUser);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     let value = event.target.value;
@@ -27,6 +30,11 @@ const ChangePassword = () => {
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
+    if (user.email === "chadjcampbell@gmail.com") {
+      toast.error("Guest account can't change password 😉");
+      setFormData(initialState);
+      return;
+    }
     if (password !== password2) {
       toast.error("New passwords must match");
     }
