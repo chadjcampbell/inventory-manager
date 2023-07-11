@@ -23,8 +23,9 @@ interface Column {
 }
 
 const columns: readonly Column[] = [
-  { id: "sku", label: "SKU", minWidth: 120 },
   { id: "name", label: "Name", minWidth: 150 },
+  { id: "action", label: "Action", minWidth: 170, align: "center" },
+  { id: "sku", label: "SKU", minWidth: 120 },
   { id: "category", label: "Category", minWidth: 75 },
   {
     id: "price",
@@ -52,7 +53,6 @@ const columns: readonly Column[] = [
       });
     },
   },
-  { id: "action", label: "Action", minWidth: 170, align: "center" },
 ];
 
 type ProductListProps = {
@@ -120,7 +120,11 @@ export default function ProductList({ products }: ProductListProps) {
     <Container sx={{ marginBottom: "50px" }}>
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
         <TableContainer sx={{ maxHeight: 440 }}>
-          <Table stickyHeader aria-label="sticky table">
+          <Table
+            sx={{ overflow: "scroll" }}
+            stickyHeader
+            aria-label="sticky table"
+          >
             <TableHead>
               <TableRow>
                 {columns.map((column) => (
