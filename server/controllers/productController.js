@@ -6,20 +6,11 @@ const cloudinary = require("cloudinary").v2;
 
 const createProduct = [
   // validate request
-  body("name")
-    .trim()
-    .notEmpty()
-    .escape()
-    .withMessage("Please enter product name"),
-  body("sku")
-    .trim()
-    .notEmpty()
-    .escape()
-    .withMessage("Please enter product sku"),
+  body("name").trim().notEmpty().withMessage("Please enter product name"),
+  body("sku").trim().notEmpty().withMessage("Please enter product sku"),
   body("category")
     .trim()
     .notEmpty()
-    .escape()
     .withMessage("Please enter product category"),
   body("quantity")
     .trim()
@@ -34,7 +25,6 @@ const createProduct = [
   body("description")
     .trim()
     .notEmpty()
-    .escape()
     .withMessage("Please enter product description"),
   asyncHandler(async (req, res) => {
     const { name, sku, category, quantity, price, description } = req.body;
