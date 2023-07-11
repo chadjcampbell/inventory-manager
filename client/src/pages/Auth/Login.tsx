@@ -7,7 +7,7 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { validEmail } from "./Register";
@@ -22,33 +22,52 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [index, setIndex] = useState(0);
+  const [nameIndex, setNameIndex] = useState(0);
+  const [passIndex, setPassIndex] = useState(0);
+  const [guestBool, setGuestBool] = useState(false);
+  const guestData = { email: "chadjcampbell@gmail.com", password: "fakepass" };
 
-  const handleGuestLogin = async () => {
-    const userData = { email: "chadjcampbell@gmail.com", password: "fakepass" };
-    if (index < userData.email.length - 1) {
-      setEmail((prev) => prev + userData.email[index]);
-      setIndex((index) => index + 1);
-      setTimeout(() => {
-        handleGuestLogin();
+  useEffect(() => {
+    let timer: NodeJS.Timeout | undefined;
+    if (nameIndex < guestData.email.length && guestBool) {
+      timer = setTimeout(() => {
+        setEmail((prev) => prev + guestData.email[nameIndex]);
+        setNameIndex((nameIndex) => nameIndex + 1);
+      }, 50);
+    }
+    if (
+      passIndex < guestData.password.length &&
+      nameIndex === guestData.email.length &&
+      guestBool
+    ) {
+      timer = setTimeout(() => {
+        setPassword((prev) => prev + guestData.password[passIndex]);
+        setPassIndex((passIndex) => passIndex + 1);
+      }, 50);
+    }
+    if (
+      passIndex === guestData.password.length &&
+      nameIndex === guestData.email.length &&
+      guestBool
+    ) {
+      timer = setTimeout(() => {
+        handleSubmit();
       }, 500);
     }
 
-    /*     setIsLoading(true);
-    try {
-      const data = await loginUser(userData);
-      dispatch(SET_LOGIN(true));
-      dispatch(SET_NAME(data.name));
-      navigate("/dashboard");
-      setIsLoading(false);
-    } catch (error: any) {
-      toast.error(error);
-      setIsLoading(false);
-    } */
+    return () => clearTimeout(timer);
+  }, [guestBool, nameIndex, passIndex]);
+
+  const handleGuestLogin = async () => {
+    setEmail("");
+    setPassword("");
+    setGuestBool(true);
   };
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (e?: FormEvent) => {
+    if (e) {
+      e.preventDefault();
+    }
     if (!email || !password) {
       return toast.error("All fields are required");
     }
