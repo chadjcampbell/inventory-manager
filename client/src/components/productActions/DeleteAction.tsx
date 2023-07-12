@@ -1,5 +1,5 @@
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { Button, Typography, Modal, Box } from "@mui/material";
+import { Button, Typography, Modal, Box, Paper } from "@mui/material";
 import { useState } from "react";
 
 import { useAppDispatch } from "../../redux/store";
@@ -49,18 +49,27 @@ export const DeleteAction = ({ product }: ActionCellProps) => {
         aria-describedby="keep-mounted-modal-description"
       >
         <Box sx={modalStyle}>
-          <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
-            Delete Product
-          </Typography>
-          <Typography id="keep-mounted-modal-description" sx={{ mt: 2 }}>
-            Are you sure you want to delete this product?
-          </Typography>
-          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Button color="error" onClick={() => handleDelete(product._id)}>
-              Delete
-            </Button>
-            <Button onClick={handleClose}>Cancel</Button>
-          </Box>
+          <Paper>
+            <Typography
+              id={`keep-mounted-modal-title-${product.name}`}
+              variant="h6"
+              component="h2"
+            >
+              Delete Product
+            </Typography>
+            <Typography
+              id={`keep-mounted-modal-description-${product.name}`}
+              sx={{ mt: 2 }}
+            >
+              Are you sure you want to delete this product?
+            </Typography>
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Button color="error" onClick={() => handleDelete(product._id)}>
+                Delete
+              </Button>
+              <Button onClick={handleClose}>Cancel</Button>
+            </Box>
+          </Paper>
         </Box>
       </Modal>
     </div>

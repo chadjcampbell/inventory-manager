@@ -16,7 +16,7 @@ const DashboardFooter = () => {
         justifyContent: "center",
       }}
     >
-      <Typography pt={2} pb={2} color="white" variant="subtitle1">
+      <Typography pt={2} pb={2} color="white" variant="subtitle1" component="p">
         {`Made with ❤️ by Chad J Campbell | ${year}`}
       </Typography>
     </AppBar>

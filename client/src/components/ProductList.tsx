@@ -143,12 +143,7 @@ export default function ProductList({ products }: ProductListProps) {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((product) => {
                   return (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      tabIndex={-1}
-                      key={product.sku}
-                    >
+                    <TableRow hover tabIndex={-1} key={product.sku}>
                       {columns.map((column) => {
                         const cellValue = product[column.id];
                         return (

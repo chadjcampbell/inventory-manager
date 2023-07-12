@@ -66,7 +66,7 @@ const ProductSummary = ({ products }: ProductSummaryProps) => {
         />
 
         <InfoBox
-          bgColor="red"
+          bgColor="darkred"
           title="Out of Stock"
           count={outOfStock}
           icon={outOfStockIcon}
