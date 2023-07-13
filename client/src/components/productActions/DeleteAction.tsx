@@ -49,7 +49,7 @@ export const DeleteAction = ({ product }: ActionCellProps) => {
         aria-describedby="keep-mounted-modal-description"
       >
         <Box sx={modalStyle}>
-          <Paper>
+          <Paper sx={{ padding: "20px" }}>
             <Typography
               id={`keep-mounted-modal-title-${product.name}`}
               variant="h6"
