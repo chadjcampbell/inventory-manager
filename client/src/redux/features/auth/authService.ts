@@ -39,7 +39,6 @@ export const loginUser = async (userData: UserDataType) => {
       BACKEND_URL + "/api/users/login",
       userData
     );
-    console.log(response);
     if (response.status >= 200 && response.status < 300) {
       toast.success("User Login Successful");
     }
