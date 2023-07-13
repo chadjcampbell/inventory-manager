@@ -39,7 +39,8 @@ export const loginUser = async (userData: UserDataType) => {
       BACKEND_URL + "/api/users/login",
       userData
     );
-    if (response.statusText === "OK") {
+    console.log(response);
+    if (response.status >= 200 && response.status < 300) {
       toast.success("User Login Successful");
     }
     return response.data;
@@ -55,7 +56,7 @@ export const loginUser = async (userData: UserDataType) => {
 export const logoutUser = async () => {
   try {
     const response = await axios.get(BACKEND_URL + "/api/users/logout");
-    if (response.statusText === "OK") {
+    if (response.status >= 200 && response.status < 300) {
       toast.success("User Logout Successful");
     }
     return response.data;
